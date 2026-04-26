@@ -30,34 +30,7 @@
       font-weight: 300;
       letter-spacing: 0.04em;
       min-height: 100vh;
-      cursor: none;
     }
-
-    /* Custom cursor */
-    .cursor {
-      position: fixed;
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 32px;
-      height: 32px;
-      border: 1px solid rgba(200,184,154,0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.12s ease, width 0.3s ease, height 0.3s ease;
-    }
-    body:has(a:hover) .cursor, body:has(button:hover) .cursor { width: 14px; height: 14px; }
-    body:has(a:hover) .cursor-ring, body:has(button:hover) .cursor-ring { width: 48px; height: 48px; border-color: rgba(200,184,154,0.7); }
 
     /* ── NAV ── */
     nav {
@@ -80,7 +53,6 @@
       letter-spacing: 0.12em;
       color: var(--text);
       text-decoration: none;
-      cursor: none;
     }
     .nav-logo span { font-style: italic; color: var(--accent); }
 
@@ -99,7 +71,6 @@
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.3s ease;
-      cursor: none;
       position: relative;
     }
     .nav-links a::after {
@@ -520,7 +491,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 16px 36px;
-      cursor: none;
+      cursor: pointer;
       transition: all 0.3s ease;
     }
 
@@ -608,12 +579,91 @@
 
     footer a:hover { color: var(--accent); }
 
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0);
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s ease;
+    }
+    .lightbox.open {
+      display: flex;
+      background: rgba(0,0,0,0.92);
+    }
+    .lightbox-img-wrap {
+      position: relative;
+      max-width: 88vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-img-wrap img {
+      max-width: 88vw;
+      max-height: 88vh;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: block;
+    }
+    .lightbox.open .lightbox-img-wrap img {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 28px;
+      right: 36px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      line-height: 1;
+      z-index: 1001;
+    }
+    .lightbox-close:hover { color: var(--text); }
+    .lightbox-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+    }
+    .lightbox-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    .lightbox-counter {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      z-index: 1001;
+    }
+
   </style>
 </head>
 <body>
-
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
 
   <!-- NAV -->
   <nav>
@@ -625,6 +675,17 @@
     </ul>
   </nav>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="lightboxBgClick(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-btn lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+    <div class="lightbox-img-wrap" id="lightbox-wrap">
+      <img id="lightbox-img" src="" alt="" />
+    </div>
+    <button class="lightbox-btn lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
+
   <!-- ══ HOME ══ -->
   <div id="page-home" class="page active">
 
@@ -633,7 +694,7 @@
       <div class="hero-img-placeholder"></div>
       <div class="hero-bg"></div>
       <div class="hero-text">
-        <h1>Street<br><em>Frames</em></h1>
+        <h1>Hans Hendrik<br><em>Photography</em></h1>
         <p class="hero-tagline">Photography by Hans Hendrik — Hamburg</p>
       </div>
       <span class="scroll-hint">Scroll</span>
@@ -643,7 +704,6 @@
     <section class="gallery-section">
       <div class="section-header">
         <h2 class="section-title"><em>People</em></h2>
-        <span class="section-count">Series 01</span>
       </div>
       <div class="masonry">
         <!-- Füge deine Bilder ein: ersetze .masonry-item durch <img src="dein-bild.jpg"> -->
@@ -661,7 +721,6 @@
     <section class="gallery-section">
       <div class="section-header">
         <h2 class="section-title"><em>Travel</em></h2>
-        <span class="section-count">Series 02</span>
       </div>
       <div class="masonry">
         <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-64.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
@@ -677,7 +736,6 @@
     <section class="gallery-section">
       <div class="section-header">
         <h2 class="section-title"><em>Moods</em></h2>
-        <span class="section-count">Series 03</span>
       </div>
       <div class="masonry">
         <div class="masonry-item"><div class="photo-placeholder" style="--ratio:170%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
@@ -753,18 +811,9 @@
       <h3>Angaben gemäß § 5 TMG</h3>
       <address>
         Hans Hendrik Wenzel<br>
-        [Straße und Hausnummer]<br>
-        22307 Hamburg <!-- Postleitzahl Barmbek-Nord — bitte prüfen und ggf. anpassen -->
+        Steilshooper Straße 206<br>
+        22307 Hamburg
       </address>
-    </div>
-
-    <hr class="impressum-divider" />
-
-    <div class="impressum-block">
-      <h3>Kontakt</h3>
-      <p>
-        E-Mail: <a href="mailto:[deine@email.de]">[deine@email.de]</a>
-      </p>
     </div>
 
     <hr class="impressum-divider" />
@@ -823,38 +872,90 @@
   </div>
 
   <script>
-    // ── Cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
+    // ── Lightbox
+    let lightboxImages = [];
+    let lightboxIndex = 0;
 
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-    });
-
-    function animateRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(animateRing);
+    function buildImageList() {
+      lightboxImages = [];
+      document.querySelectorAll('.masonry-item').forEach(item => {
+        const img = item.querySelector('img');
+        if (img) lightboxImages.push(img.src);
+      });
     }
-    animateRing();
+
+    function openLightbox(src) {
+      buildImageList();
+      lightboxIndex = lightboxImages.indexOf(src);
+      if (lightboxIndex === -1) lightboxIndex = 0;
+      const lb = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      lbImg.src = '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => { lbImg.src = lightboxImages[lightboxIndex]; }, 30);
+      updateCounter();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function lightboxBgClick(e) {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function lightboxNav(dir) {
+      if (!lightboxImages.length) return;
+      lightboxIndex = (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+      const lbImg = document.getElementById('lightbox-img');
+      lbImg.style.opacity = 0;
+      lbImg.style.transform = 'scale(0.94)';
+      setTimeout(() => {
+        lbImg.src = lightboxImages[lightboxIndex];
+        lbImg.style.opacity = 1;
+        lbImg.style.transform = 'scale(1)';
+        updateCounter();
+      }, 200);
+    }
+
+    function updateCounter() {
+      document.getElementById('lightbox-counter').textContent =
+        (lightboxIndex + 1) + ' / ' + lightboxImages.length;
+    }
+
+    // Add click handlers to all real photos
+    function attachPhotoClicks() {
+      document.querySelectorAll('.photo-real').forEach(wrap => {
+        wrap.style.cursor = 'pointer';
+        wrap.addEventListener('click', () => {
+          const img = wrap.querySelector('img');
+          if (img) openLightbox(img.src);
+        });
+      });
+    }
+    attachPhotoClicks();
+
+    // Arrow keys
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'Escape') closeLightbox();
+    });
 
     // ── Navigation
     function showPage(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-
       document.getElementById('page-' + name).classList.add('active');
       document.getElementById('nav-' + (name === 'impressum' ? 'impressum' : name === 'about' ? 'about' : 'home')).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return false;
     }
 
-    // Prevent default on all nav links
     document.querySelectorAll('a[onclick]').forEach(a => {
       a.addEventListener('click', e => e.preventDefault());
     });
