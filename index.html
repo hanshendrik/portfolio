@@ -12,11 +12,12 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0b0b0b;
-      --bg2: #111111;
-      --text: #ddd8d0;
-      --text-muted: #7a7570;
-      --accent: #c8b89a;
+      --bg: #f5f2ee;
+      --bg2: #ece8e2;
+      --text: #2a2520;
+      --text-muted: #8a8178;
+      --accent: #7a6a58;
+      --border: rgba(42,37,32,0.1);
       --serif: 'Cormorant Garant', Georgia, serif;
       --sans: 'Josefin Sans', sans-serif;
     }
@@ -35,15 +36,13 @@
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 28px 52px;
-      background: linear-gradient(to bottom, rgba(11,11,11,0.95) 0%, transparent 100%);
+      background: linear-gradient(to bottom, rgba(245,242,238,0.97) 0%, rgba(245,242,238,0) 100%);
     }
 
     .nav-logo {
@@ -56,11 +55,7 @@
     }
     .nav-logo span { font-style: italic; color: var(--accent); }
 
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
 
     .nav-links a {
       font-family: var(--sans);
@@ -76,10 +71,8 @@
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 0;
-      height: 1px;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
       background: var(--accent);
       transition: width 0.3s ease;
     }
@@ -92,51 +85,29 @@
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── HOME ── */
+    /* ── HERO ── */
     #page-home { padding-top: 0; }
 
     .hero {
-      height: 100vh;
+      height: 80vh;
       display: flex;
       align-items: flex-end;
-      padding: 0 52px 80px;
+      padding: 0 52px 72px;
       position: relative;
       overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: 
-        radial-gradient(ellipse at 70% 40%, rgba(200,184,154,0.04) 0%, transparent 60%),
-        linear-gradient(to bottom, transparent 40%, var(--bg) 100%);
+      background: linear-gradient(135deg, #ede8e0 0%, #f0ece6 50%, #e8e2d8 100%);
     }
 
-    .hero-img-placeholder {
-      position: absolute;
-      inset: 0;
-      background: 
-        linear-gradient(135deg, #1a1814 0%, #0d0d0c 50%, #161412 100%);
-      opacity: 0.8;
-    }
-
-    /* grain overlay */
-    .hero-img-placeholder::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-    }
-
-    .hero-text {
-      position: relative;
-      z-index: 2;
-    }
+    .hero-text { position: relative; z-index: 2; }
 
     .hero-text h1 {
       font-family: var(--serif);
@@ -147,11 +118,7 @@
       color: var(--text);
       margin-bottom: 20px;
     }
-
-    .hero-text h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
+    .hero-text h1 em { font-style: italic; color: var(--accent); }
 
     .hero-tagline {
       font-size: 0.7rem;
@@ -162,8 +129,7 @@
 
     .scroll-hint {
       position: absolute;
-      bottom: 32px;
-      right: 52px;
+      bottom: 32px; right: 52px;
       font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -177,70 +143,27 @@
     }
     .scroll-hint::before {
       content: '';
-      width: 1px;
-      height: 48px;
+      width: 1px; height: 48px;
       background: linear-gradient(to bottom, transparent, var(--accent));
     }
-
     @keyframes pulse {
-      0%, 100% { opacity: 0.5; } 50% { opacity: 1; }
+      0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; }
     }
 
-    /* ── GALLERY SECTIONS ── */
-    .gallery-section {
-      padding: 100px 52px;
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
+    /* ── GALLERY ── */
+    .gallery-section { padding: 80px 52px 100px; }
 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 32px;
-      margin-bottom: 64px;
-    }
-
-    .section-title {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(3.5rem, 6vw, 6rem);
-      letter-spacing: -0.02em;
-      color: var(--text);
-      line-height: 1;
-    }
-
-    .section-title em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .section-count {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      padding-bottom: 4px;
-    }
-
-    /* Irregular masonry grid */
-    .masonry {
-      columns: 3;
-      column-gap: 12px;
-    }
-
+    .masonry { columns: 3; column-gap: 10px; }
     @media (max-width: 900px) { .masonry { columns: 2; } }
     @media (max-width: 560px) { .masonry { columns: 1; } }
 
     .masonry-item {
       break-inside: avoid;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       overflow: hidden;
       position: relative;
-      cursor: none;
+      cursor: pointer;
     }
-
-    .masonry-item:nth-child(3n+1) { margin-top: 0; }
-    .masonry-item:nth-child(3n+2) { margin-top: 40px; }
-    .masonry-item:nth-child(3n+3) { margin-top: -20px; }
 
     .photo-placeholder {
       width: 100%;
@@ -248,48 +171,39 @@
       background: var(--bg2);
       position: relative;
       overflow: hidden;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
-    .masonry-item:hover .photo-placeholder { transform: scale(1.02); }
-
     .photo-placeholder::before {
       content: '';
       display: block;
       padding-top: var(--ratio, 130%);
     }
-
     .photo-placeholder::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: 
-        radial-gradient(ellipse at 30% 30%, rgba(200,184,154,0.06) 0%, transparent 70%),
-        linear-gradient(135deg, #1c1a17 0%, #141210 100%);
+      background: linear-gradient(135deg, #ddd8d0 0%, #d0cac0 100%);
     }
 
     .photo-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(11,11,11,0.6);
+      background: rgba(42,37,32,0.32);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.35s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2;
     }
-
     .masonry-item:hover .photo-overlay { opacity: 1; }
 
     .photo-overlay-text {
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #f5f2ee;
     }
 
-    /* Placeholder label inside photo */
     .photo-label {
       position: absolute;
       inset: 0;
@@ -300,284 +214,22 @@
       z-index: 1;
       gap: 8px;
     }
-
-    .photo-label-icon {
-      width: 32px;
-      height: 32px;
-      opacity: 0.12;
-    }
-
+    .photo-label-icon { width: 28px; height: 28px; opacity: 0.18; color: var(--text-muted); }
     .photo-label-text {
       font-size: 0.6rem;
       letter-spacing: 0.2em;
       color: var(--text-muted);
       text-transform: uppercase;
-      opacity: 0.4;
+      opacity: 0.5;
     }
 
-    /* Real photos */
-    .photo-real {
-      position: relative;
-      overflow: hidden;
-    }
+    .photo-real { position: relative; overflow: hidden; }
     .photo-real img {
       width: 100%;
       display: block;
       transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .masonry-item:hover .photo-real img { transform: scale(1.02); }
-
-    /* Replace placeholder — instruction note */
-    .replace-note {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      text-align: right;
-      margin-top: 16px;
-      opacity: 0.4;
-    }
-
-    /* ── ABOUT PAGE ── */
-    #page-about {
-      padding: 140px 52px 100px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-      margin-bottom: 120px;
-    }
-
-    @media (max-width: 720px) {
-      .about-grid { grid-template-columns: 1fr; gap: 48px; }
-    }
-
-    .about-photo {
-      aspect-ratio: 3/4;
-      background: var(--bg2);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .about-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #1c1a17 0%, #141210 100%);
-    }
-
-    .about-photo-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      opacity: 0.4;
-    }
-
-    .about-text h2 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2.5rem, 4vw, 4rem);
-      line-height: 1.05;
-      margin-bottom: 32px;
-      color: var(--text);
-    }
-
-    .about-text h2 em { font-style: italic; color: var(--accent); }
-
-    .about-text p {
-      font-size: 0.88rem;
-      line-height: 1.9;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .about-text p strong {
-      color: var(--text);
-      font-weight: 300;
-    }
-
-    /* ── CONTACT ── */
-    .contact-section {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .contact-section h2 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2.5rem, 4vw, 4rem);
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-
-    .contact-section h2 em { font-style: italic; color: var(--accent); }
-
-    .contact-section .subtitle {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 64px;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 64px;
-    }
-
-    @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
-
-    .contact-item label {
-      display: block;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .contact-item input,
-    .contact-item textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 200;
-      font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      padding: 12px 0;
-      outline: none;
-      transition: border-color 0.3s ease;
-      resize: none;
-    }
-
-    .contact-item input:focus,
-    .contact-item textarea:focus {
-      border-bottom-color: var(--accent);
-    }
-
-    .contact-item.full { grid-column: 1 / -1; }
-
-    .contact-item textarea { height: 100px; }
-
-    .btn-send {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      background: transparent;
-      border: 1px solid rgba(200,184,154,0.3);
-      color: var(--accent);
-      font-family: var(--sans);
-      font-weight: 200;
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 16px 36px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .btn-send:hover {
-      background: rgba(200,184,154,0.06);
-      border-color: var(--accent);
-    }
-
-    .btn-send::after {
-      content: '→';
-      font-size: 1rem;
-      transition: transform 0.3s ease;
-    }
-
-    .btn-send:hover::after { transform: translateX(4px); }
-
-    /* ── IMPRESSUM ── */
-    #page-impressum {
-      padding: 140px 52px 100px;
-      max-width: 720px;
-    }
-
-    #page-impressum h1 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      margin-bottom: 64px;
-      color: var(--text);
-    }
-
-    #page-impressum h1 em { font-style: italic; color: var(--accent); }
-
-    .impressum-block {
-      margin-bottom: 48px;
-    }
-
-    .impressum-block h3 {
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .impressum-block p, .impressum-block address {
-      font-size: 0.85rem;
-      line-height: 1.9;
-      color: var(--text-muted);
-      font-style: normal;
-    }
-
-    .impressum-block a {
-      color: var(--text-muted);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      cursor: none;
-    }
-
-    .impressum-divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      margin: 48px 0;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 48px 52px;
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
-
-    footer p {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    footer a {
-      color: var(--text-muted);
-      text-decoration: none;
-      cursor: none;
-      transition: color 0.2s;
-    }
-
-    footer a:hover { color: var(--accent); }
+    .masonry-item:hover .photo-real img { transform: scale(1.03); }
 
     /* ── LIGHTBOX ── */
     .lightbox {
@@ -585,17 +237,12 @@
       position: fixed;
       inset: 0;
       z-index: 1000;
-      background: rgba(0,0,0,0);
       align-items: center;
       justify-content: center;
-      transition: background 0.4s ease;
     }
-    .lightbox.open {
-      display: flex;
-      background: rgba(0,0,0,0.92);
-    }
+    .lightbox.open { display: flex; background: rgba(28,24,20,0.93); }
+
     .lightbox-img-wrap {
-      position: relative;
       max-width: 88vw;
       max-height: 88vh;
       display: flex;
@@ -611,34 +258,31 @@
       transition: opacity 0.4s ease, transform 0.4s ease;
       display: block;
     }
-    .lightbox.open .lightbox-img-wrap img {
-      opacity: 1;
-      transform: scale(1);
-    }
+    .lightbox.open .lightbox-img-wrap img { opacity: 1; transform: scale(1); }
+
     .lightbox-close {
       position: fixed;
-      top: 28px;
-      right: 36px;
+      top: 28px; right: 36px;
       background: none;
       border: none;
-      color: var(--text-muted);
-      font-size: 1.8rem;
+      color: rgba(245,242,238,0.5);
+      font-size: 2rem;
       cursor: pointer;
       transition: color 0.2s;
       line-height: 1;
       z-index: 1001;
     }
-    .lightbox-close:hover { color: var(--text); }
+    .lightbox-close:hover { color: #f5f2ee; }
+
     .lightbox-btn {
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
       background: none;
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      width: 48px;
-      height: 48px;
+      border: 1px solid rgba(245,242,238,0.15);
+      color: rgba(245,242,238,0.5);
+      font-size: 1rem;
+      width: 48px; height: 48px;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -646,9 +290,10 @@
       justify-content: center;
       z-index: 1001;
     }
-    .lightbox-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .lightbox-btn:hover { border-color: rgba(245,242,238,0.6); color: #f5f2ee; }
     .lightbox-prev { left: 24px; }
     .lightbox-next { right: 24px; }
+
     .lightbox-counter {
       position: fixed;
       bottom: 28px;
@@ -656,14 +301,188 @@
       transform: translateX(-50%);
       font-size: 0.62rem;
       letter-spacing: 0.2em;
-      color: var(--text-muted);
+      color: rgba(245,242,238,0.4);
       text-transform: uppercase;
       z-index: 1001;
     }
 
+    /* ── ABOUT ── */
+    #page-about { padding: 140px 52px 100px; max-width: 1100px; margin: 0 auto; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 120px;
+    }
+    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+    .about-photo {
+      aspect-ratio: 3/4;
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ddd8d0 0%, #ccc6bc 100%);
+    }
+    .about-photo-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    .about-text h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1.05;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+    .about-text h2 em { font-style: italic; color: var(--accent); }
+
+    .about-text p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--text); font-weight: 400; }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      border-top: 1px solid var(--border);
+      padding-top: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .contact-section h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .contact-section h2 em { font-style: italic; color: var(--accent); }
+    .contact-section .subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 64px;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    .contact-item label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .contact-item input, .contact-item textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      padding: 12px 0;
+      outline: none;
+      transition: border-color 0.3s ease;
+      resize: none;
+    }
+    .contact-item input:focus, .contact-item textarea:focus { border-bottom-color: var(--accent); }
+    .contact-item.full { grid-column: 1 / -1; }
+    .contact-item textarea { height: 100px; }
+
+    .btn-send {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: transparent;
+      border: 1px solid rgba(122,106,88,0.35);
+      color: var(--accent);
+      font-family: var(--sans);
+      font-weight: 200;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn-send:hover { background: rgba(122,106,88,0.06); border-color: var(--accent); }
+    .btn-send::after { content: '→'; font-size: 1rem; transition: transform 0.3s ease; }
+    .btn-send:hover::after { transform: translateX(4px); }
+
+    /* ── IMPRESSUM ── */
+    #page-impressum { padding: 140px 52px 100px; max-width: 720px; }
+    #page-impressum h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 64px;
+      color: var(--text);
+    }
+    #page-impressum h1 em { font-style: italic; color: var(--accent); }
+
+    .impressum-block { margin-bottom: 48px; }
+    .impressum-block h3 {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .impressum-block p, .impressum-block address {
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+    .impressum-divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* ── FOOTER ── */
+    footer { text-align: center; padding: 48px 52px; border-top: 1px solid var(--border); }
+    footer p { font-size: 0.65rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; }
+    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="lightboxBgClick(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-btn lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+    <div class="lightbox-img-wrap"><img id="lightbox-img" src="" alt="" /></div>
+    <button class="lightbox-btn lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
 
   <!-- NAV -->
   <nav>
@@ -675,75 +494,40 @@
     </ul>
   </nav>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" onclick="lightboxBgClick(event)">
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
-    <button class="lightbox-btn lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
-    <div class="lightbox-img-wrap" id="lightbox-wrap">
-      <img id="lightbox-img" src="" alt="" />
-    </div>
-    <button class="lightbox-btn lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
-    <div class="lightbox-counter" id="lightbox-counter"></div>
-  </div>
-
   <!-- ══ HOME ══ -->
   <div id="page-home" class="page active">
 
-    <!-- Hero -->
     <section class="hero">
-      <div class="hero-img-placeholder"></div>
       <div class="hero-bg"></div>
       <div class="hero-text">
         <h1>Hans Hendrik<br><em>Photography</em></h1>
-        <p class="hero-tagline">Photography by Hans Hendrik — Hamburg</p>
+        <p class="hero-tagline">Hamburg &amp; unterwegs</p>
       </div>
       <span class="scroll-hint">Scroll</span>
     </section>
 
-    <!-- People -->
     <section class="gallery-section">
-      <div class="section-header">
-        <h2 class="section-title"><em>People</em></h2>
-      </div>
       <div class="masonry">
-        <!-- Füge deine Bilder ein: ersetze .masonry-item durch <img src="dein-bild.jpg"> -->
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:133%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:160%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:110%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:145%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:120%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:155%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-      </div>
-      <p class="replace-note">← Platzhalter — ersetze durch eigene Bilder via &lt;img src="..."&gt;</p>
-    </section>
 
-    <!-- Travel -->
-    <section class="gallery-section">
-      <div class="section-header">
-        <h2 class="section-title"><em>Travel</em></h2>
-      </div>
-      <div class="masonry">
+        <!-- Echte Fotos -->
         <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-64.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
         <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-65.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
         <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-66.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
         <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-67.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:165%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:118%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-      </div>
-    </section>
 
-    <!-- Moods -->
-    <section class="gallery-section">
-      <div class="section-header">
-        <h2 class="section-title"><em>Moods</em></h2>
-      </div>
-      <div class="masonry">
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:170%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <!-- Platzhalter — ersetze durch <div class="masonry-item"><div class="photo-real"><img src="img/deinbild.jpg" alt="..."><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div> -->
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:133%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:155%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:118%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:145%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
         <div class="masonry-item"><div class="photo-placeholder" style="--ratio:128%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:160%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:138%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:115%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:170%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:122%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
         <div class="masonry-item"><div class="photo-placeholder" style="--ratio:142%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:120%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:158%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:112%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+
       </div>
     </section>
 
@@ -761,19 +545,12 @@
       <div class="about-text">
         <h2>Über<br><em>mich.</em></h2>
         <p>
-          Ich bin Hans Hendrik — Fotograf aus <strong>Hamburg</strong>.
-          Mit meiner Kamera erkunde ich die Straßen der Stadt,
-          suche nach Momenten, die zwischen Sehen und Verschwinden existieren.
+          In meiner Fotografie fange ich das alltägliche Leben der Menschen in unserer Umgebung ein —
+          die Menschen, die uns jeden Tag begegnen, und die wir doch oft nicht wirklich wahrnehmen.
         </p>
         <p>
-          Meine Arbeit bewegt sich zwischen den Kategorien:
-          <strong>Menschen</strong> in ihrer alltäglichen Energie,
-          <strong>Reise</strong> als Form der visuellen Übersetzung fremder Orte,
-          und <strong>Stimmungen</strong> — das Licht, das keine Namen hat.
-        </p>
-        <p>
-          <!-- Ergänze hier deinen persönlichen Text -->
-          Fotografieren ist für mich kein Dokumentieren, sondern ein Innehalten.
+          Ich fotografiere vor allem in <strong>Hamburg</strong> und unterwegs, mit einem Fokus auf
+          authentische Motive und <strong>urbane Szenen</strong>.
         </p>
       </div>
     </section>
@@ -827,52 +604,30 @@
 
     <div class="impressum-block">
       <h3>Haftung für Inhalte</h3>
-      <p>
-        Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den
-        allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht
-        verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
-        zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
-      </p>
-      <p>
-        Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen
-        Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der
-        Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden
-        Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.
-      </p>
+      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+      <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.</p>
     </div>
 
     <hr class="impressum-divider" />
 
     <div class="impressum-block">
       <h3>Haftung für Links</h3>
-      <p>
-        Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe.
-        Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
-        verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-        Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
-        Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
-      </p>
+      <p>Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
     </div>
 
     <hr class="impressum-divider" />
 
     <div class="impressum-block">
       <h3>Urheberrecht</h3>
-      <p>
-        Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
-        Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
-        Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
-        Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.
-      </p>
+      <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.</p>
     </div>
 
-    <footer style="padding-left:0;text-align:left;margin-top:64px">
+    <footer style="padding-left:0; text-align:left; margin-top:64px">
       <p><a href="#" onclick="showPage('home')">← Zurück zur Startseite</a></p>
     </footer>
   </div>
 
   <script>
-    // ── Lightbox
     let lightboxImages = [];
     let lightboxIndex = 0;
 
@@ -888,10 +643,9 @@
       buildImageList();
       lightboxIndex = lightboxImages.indexOf(src);
       if (lightboxIndex === -1) lightboxIndex = 0;
-      const lb = document.getElementById('lightbox');
       const lbImg = document.getElementById('lightbox-img');
       lbImg.src = '';
-      lb.classList.add('open');
+      document.getElementById('lightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
       setTimeout(() => { lbImg.src = lightboxImages[lightboxIndex]; }, 30);
       updateCounter();
@@ -925,10 +679,8 @@
         (lightboxIndex + 1) + ' / ' + lightboxImages.length;
     }
 
-    // Add click handlers to all real photos
     function attachPhotoClicks() {
       document.querySelectorAll('.photo-real').forEach(wrap => {
-        wrap.style.cursor = 'pointer';
         wrap.addEventListener('click', () => {
           const img = wrap.querySelector('img');
           if (img) openLightbox(img.src);
@@ -937,16 +689,13 @@
     }
     attachPhotoClicks();
 
-    // Arrow keys
     document.addEventListener('keydown', e => {
-      const lb = document.getElementById('lightbox');
-      if (!lb.classList.contains('open')) return;
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
       if (e.key === 'ArrowLeft') lightboxNav(-1);
       if (e.key === 'ArrowRight') lightboxNav(1);
       if (e.key === 'Escape') closeLightbox();
     });
 
-    // ── Navigation
     function showPage(name) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
