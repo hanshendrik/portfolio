@@ -12,12 +12,11 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #f5f2ee;
-      --bg2: #ece8e2;
-      --text: #2a2520;
-      --text-muted: #8a8178;
-      --accent: #7a6a58;
-      --border: rgba(42,37,32,0.1);
+      --bg: #e8e8e6;
+      --text: #1a1a1a;
+      --text-muted: #787878;
+      --accent: #4a4a4a;
+      --border: rgba(26,26,26,0.12);
       --serif: 'Cormorant Garant', Georgia, serif;
       --sans: 'Josefin Sans', sans-serif;
     }
@@ -42,9 +41,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 28px 52px;
-      background: linear-gradient(to bottom, rgba(245,242,238,0.97) 0%, rgba(245,242,238,0) 100%);
+      background: linear-gradient(to bottom, rgba(232,232,230,0.97) 0%, rgba(232,232,230,0) 100%);
     }
-
     .nav-logo {
       font-family: var(--serif);
       font-weight: 300;
@@ -54,9 +52,7 @@
       text-decoration: none;
     }
     .nav-logo span { font-style: italic; color: var(--accent); }
-
     .nav-links { display: flex; gap: 40px; list-style: none; }
-
     .nav-links a {
       font-family: var(--sans);
       font-weight: 200;
@@ -82,7 +78,6 @@
     /* ── PAGES ── */
     .page { display: none; min-height: 100vh; }
     .page.active { display: block; animation: fadeIn 0.5s ease forwards; }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -90,7 +85,6 @@
 
     /* ── HERO ── */
     #page-home { padding-top: 0; }
-
     .hero {
       height: 80vh;
       display: flex;
@@ -100,15 +94,11 @@
       overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-
     .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #ede8e0 0%, #f0ece6 50%, #e8e2d8 100%);
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #e2e2df 0%, #e8e8e5 50%, #deded9 100%);
     }
-
     .hero-text { position: relative; z-index: 2; }
-
     .hero-text h1 {
       font-family: var(--serif);
       font-weight: 300;
@@ -119,14 +109,12 @@
       margin-bottom: 20px;
     }
     .hero-text h1 em { font-style: italic; color: var(--accent); }
-
     .hero-tagline {
       font-size: 0.7rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
-
     .scroll-hint {
       position: absolute;
       bottom: 32px; right: 52px;
@@ -135,9 +123,7 @@
       text-transform: uppercase;
       color: var(--text-muted);
       writing-mode: vertical-rl;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      display: flex; align-items: center; gap: 12px;
       z-index: 2;
       animation: pulse 2.5s ease infinite;
     }
@@ -146,13 +132,32 @@
       width: 1px; height: 48px;
       background: linear-gradient(to bottom, transparent, var(--accent));
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.9; } }
+
+    /* ── GALLERY SECTIONS ── */
+    .gallery-section {
+      padding: 72px 52px 56px;
+      border-top: 1px solid var(--border);
+    }
+    .section-header { margin-bottom: 44px; }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-sub {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 10px;
     }
 
-    /* ── GALLERY ── */
-    .gallery-section { padding: 80px 52px 100px; }
-
+    /* ── MASONRY ── */
     .masonry { columns: 3; column-gap: 10px; }
     @media (max-width: 900px) { .masonry { columns: 2; } }
     @media (max-width: 560px) { .masonry { columns: 1; } }
@@ -164,305 +169,173 @@
       position: relative;
       cursor: pointer;
     }
-
-    .photo-placeholder {
-      width: 100%;
-      display: block;
-      background: var(--bg2);
-      position: relative;
-      overflow: hidden;
+    .photo-real { position: relative; overflow: hidden; }
+    .photo-real img {
+      width: 100%; display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    .photo-placeholder::before {
-      content: '';
-      display: block;
-      padding-top: var(--ratio, 130%);
-    }
-    .photo-placeholder::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #ddd8d0 0%, #d0cac0 100%);
-    }
-
+    .masonry-item:hover .photo-real img { transform: scale(1.03); }
     .photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(42,37,32,0.32);
+      position: absolute; inset: 0;
+      background: rgba(26,26,26,0.3);
       opacity: 0;
       transition: opacity 0.35s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       z-index: 2;
     }
     .masonry-item:hover .photo-overlay { opacity: 1; }
-
     .photo-overlay-text {
       font-size: 0.62rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: #f5f2ee;
+      color: #f0f0ee;
     }
-
-    .photo-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      gap: 8px;
-    }
-    .photo-label-icon { width: 28px; height: 28px; opacity: 0.18; color: var(--text-muted); }
-    .photo-label-text {
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      opacity: 0.5;
-    }
-
-    .photo-real { position: relative; overflow: hidden; }
-    .photo-real img {
-      width: 100%;
-      display: block;
-      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .masonry-item:hover .photo-real img { transform: scale(1.03); }
 
     /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       z-index: 1000;
       align-items: center;
       justify-content: center;
     }
-    .lightbox.open { display: flex; background: rgba(28,24,20,0.93); }
-
+    .lightbox.open { display: flex; background: rgba(15,15,14,0.94); }
     .lightbox-img-wrap {
-      max-width: 88vw;
-      max-height: 88vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      max-width: 88vw; max-height: 88vh;
+      display: flex; align-items: center; justify-content: center;
     }
     .lightbox-img-wrap img {
-      max-width: 88vw;
-      max-height: 88vh;
+      max-width: 88vw; max-height: 88vh;
       object-fit: contain;
-      opacity: 0;
-      transform: scale(0.94);
+      opacity: 0; transform: scale(0.94);
       transition: opacity 0.4s ease, transform 0.4s ease;
       display: block;
     }
     .lightbox.open .lightbox-img-wrap img { opacity: 1; transform: scale(1); }
-
     .lightbox-close {
-      position: fixed;
-      top: 28px; right: 36px;
-      background: none;
-      border: none;
-      color: rgba(245,242,238,0.5);
-      font-size: 2rem;
-      cursor: pointer;
-      transition: color 0.2s;
-      line-height: 1;
-      z-index: 1001;
+      position: fixed; top: 28px; right: 36px;
+      background: none; border: none;
+      color: rgba(240,240,238,0.5);
+      font-size: 2rem; cursor: pointer;
+      transition: color 0.2s; line-height: 1; z-index: 1001;
     }
-    .lightbox-close:hover { color: #f5f2ee; }
-
+    .lightbox-close:hover { color: #f0f0ee; }
     .lightbox-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
+      position: fixed; top: 50%; transform: translateY(-50%);
       background: none;
-      border: 1px solid rgba(245,242,238,0.15);
-      color: rgba(245,242,238,0.5);
-      font-size: 1rem;
+      border: 1px solid rgba(240,240,238,0.15);
+      color: rgba(240,240,238,0.5);
       width: 48px; height: 48px;
       cursor: pointer;
       transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       z-index: 1001;
     }
-    .lightbox-btn:hover { border-color: rgba(245,242,238,0.6); color: #f5f2ee; }
+    .lightbox-btn:hover { border-color: rgba(240,240,238,0.6); color: #f0f0ee; }
     .lightbox-prev { left: 24px; }
     .lightbox-next { right: 24px; }
-
     .lightbox-counter {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      color: rgba(245,242,238,0.4);
-      text-transform: uppercase;
-      z-index: 1001;
+      position: fixed; bottom: 28px;
+      left: 50%; transform: translateX(-50%);
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      color: rgba(240,240,238,0.4);
+      text-transform: uppercase; z-index: 1001;
     }
 
     /* ── ABOUT ── */
     #page-about { padding: 140px 52px 100px; max-width: 1100px; margin: 0 auto; }
-
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+      gap: 80px; align-items: start;
       margin-bottom: 120px;
     }
     @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
-
-    .about-photo {
-      aspect-ratio: 3/4;
-      background: var(--bg2);
-      position: relative;
-      overflow: hidden;
+    .about-photo { position: relative; overflow: hidden; }
+    .about-photo img { width: 100%; display: block; }
+    .about-photo-credit {
+      margin-top: 10px;
+      font-size: 0.6rem; letter-spacing: 0.15em;
+      color: var(--text-muted); text-transform: uppercase; opacity: 0.7;
     }
-    .about-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #ddd8d0 0%, #ccc6bc 100%);
-    }
-    .about-photo-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      opacity: 0.5;
-    }
-
     .about-text h2 {
       font-family: var(--serif);
       font-weight: 300;
       font-size: clamp(2.5rem, 4vw, 4rem);
-      line-height: 1.05;
-      margin-bottom: 32px;
-      color: var(--text);
+      line-height: 1.05; margin-bottom: 32px; color: var(--text);
     }
     .about-text h2 em { font-style: italic; color: var(--accent); }
-
     .about-text p {
-      font-size: 0.88rem;
-      line-height: 1.9;
-      color: var(--text-muted);
-      margin-bottom: 20px;
+      font-size: 0.88rem; line-height: 1.9;
+      color: var(--text-muted); margin-bottom: 20px;
     }
     .about-text p strong { color: var(--text); font-weight: 400; }
 
     /* ── CONTACT ── */
     .contact-section {
       border-top: 1px solid var(--border);
-      padding-top: 80px;
-      max-width: 1100px;
-      margin: 0 auto;
+      padding-top: 80px; max-width: 1100px; margin: 0 auto;
     }
     .contact-section h2 {
-      font-family: var(--serif);
-      font-weight: 300;
+      font-family: var(--serif); font-weight: 300;
       font-size: clamp(2.5rem, 4vw, 4rem);
-      margin-bottom: 16px;
-      color: var(--text);
+      margin-bottom: 16px; color: var(--text);
     }
     .contact-section h2 em { font-style: italic; color: var(--accent); }
     .contact-section .subtitle {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 64px;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 64px;
     }
     .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 64px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-bottom: 64px;
     }
     @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
-
     .contact-item label {
-      display: block;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+      display: block; font-size: 0.62rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px;
     }
     .contact-item input, .contact-item textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
+      width: 100%; background: transparent; border: none;
       border-bottom: 1px solid var(--border);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 200;
-      font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      padding: 12px 0;
-      outline: none;
-      transition: border-color 0.3s ease;
-      resize: none;
+      color: var(--text); font-family: var(--sans);
+      font-weight: 200; font-size: 0.88rem;
+      letter-spacing: 0.04em; padding: 12px 0;
+      outline: none; transition: border-color 0.3s ease; resize: none;
     }
     .contact-item input:focus, .contact-item textarea:focus { border-bottom-color: var(--accent); }
     .contact-item.full { grid-column: 1 / -1; }
     .contact-item textarea { height: 100px; }
-
     .btn-send {
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
+      display: inline-flex; align-items: center; gap: 16px;
       background: transparent;
-      border: 1px solid rgba(122,106,88,0.35);
-      color: var(--accent);
-      font-family: var(--sans);
-      font-weight: 200;
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 16px 36px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      border: 1px solid rgba(74,74,74,0.35);
+      color: var(--accent); font-family: var(--sans);
+      font-weight: 200; font-size: 0.7rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 16px 36px; cursor: pointer; transition: all 0.3s ease;
     }
-    .btn-send:hover { background: rgba(122,106,88,0.06); border-color: var(--accent); }
+    .btn-send:hover { background: rgba(74,74,74,0.06); border-color: var(--accent); }
     .btn-send::after { content: '→'; font-size: 1rem; transition: transform 0.3s ease; }
     .btn-send:hover::after { transform: translateX(4px); }
 
     /* ── IMPRESSUM ── */
     #page-impressum { padding: 140px 52px 100px; max-width: 720px; }
     #page-impressum h1 {
-      font-family: var(--serif);
-      font-weight: 300;
+      font-family: var(--serif); font-weight: 300;
       font-size: clamp(2.5rem, 5vw, 4.5rem);
-      margin-bottom: 64px;
-      color: var(--text);
+      margin-bottom: 64px; color: var(--text);
     }
     #page-impressum h1 em { font-style: italic; color: var(--accent); }
-
     .impressum-block { margin-bottom: 48px; }
     .impressum-block h3 {
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 16px;
+      font-size: 0.65rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
     }
     .impressum-block p, .impressum-block address {
-      font-size: 0.85rem;
-      line-height: 1.9;
-      color: var(--text-muted);
-      font-style: normal;
+      font-size: 0.85rem; line-height: 1.9;
+      color: var(--text-muted); font-style: normal;
     }
     .impressum-divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 
@@ -506,28 +379,111 @@
       <span class="scroll-hint">Scroll</span>
     </section>
 
+    <!-- ── Hamburg ── -->
     <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Hamburg</em></h2>
+        <p class="section-sub">Street &amp; Stadt</p>
+      </div>
       <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/Hamburg11-26.jpg" alt="Hamburg" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/Hamburg11-27.jpg" alt="Hamburg" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/Hamburg11-30.jpg" alt="Hamburg" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/Hamburg11-33.jpg" alt="Hamburg" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
 
-        <!-- Echte Fotos -->
-        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-64.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-65.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-66.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-67.jpg" alt="Photography by Hans Hendrik" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+    <!-- ── BERUTR ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Utrecht</em></h2>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-9.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-13.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-14.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-40.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-43.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/BERUTR-47.jpg" alt="Berutr" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
 
-        <!-- Platzhalter — ersetze durch <div class="masonry-item"><div class="photo-real"><img src="img/deinbild.jpg" alt="..."><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div> -->
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:133%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:155%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:118%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:145%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:128%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:160%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:138%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:115%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:170%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:122%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
-        <div class="masonry-item"><div class="photo-placeholder" style="--ratio:142%"><div class="photo-label"><svg class="photo-label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span class="photo-label-text">Foto hier</span></div><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+    <!-- ── DSCF ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Frankfurt</em></h2>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0031.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0041.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0068.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0101.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0238.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/DSCF0304.JPG" alt="DSCF" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
 
+    <!-- ── Roma ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Roma</em></h2>
+        <p class="section-sub">2024</p>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_031.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_074.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_101.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_133.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_134.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_141.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_144.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_194.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_255.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/2024_Roma_256.jpg" alt="Roma" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- ── United Kingdom ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>United Kingdom</em></h2>
+        <p class="section-sub">2026</p>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-44.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-60.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-64.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-65.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-66.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/26-UK-67.jpg" alt="United Kingdom" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- ── Cyclassics ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Cyclassics</em></h2>
+        <p class="section-sub">Hamburg 2025</p>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/25_Cyclassics-078.jpg" alt="Cyclassics" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/25_Cyclassics-079.jpg" alt="Cyclassics" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/25_Cyclassics-089.jpg" alt="Cyclassics" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/25_Cyclassics-126.jpg" alt="Cyclassics" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/25_Cyclassics-127.jpg" alt="Cyclassics" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+      </div>
+    </section>
+
+    <!-- ── Chorweiler ── -->
+    <section class="gallery-section">
+      <div class="section-header">
+        <h2 class="section-title"><em>Chorweiler</em></h2>
+        <p class="section-sub">Köln 2024</p>
+      </div>
+      <div class="masonry">
+        <div class="masonry-item"><div class="photo-real"><img src="img/24_Chorweiler-6.jpg" alt="Chorweiler" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/24_Chorweiler-9.jpg" alt="Chorweiler" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
+        <div class="masonry-item"><div class="photo-real"><img src="img/24_Chorweiler-18.jpg" alt="Chorweiler" /><div class="photo-overlay"><span class="photo-overlay-text">View</span></div></div></div>
       </div>
     </section>
 
@@ -540,7 +496,8 @@
   <div id="page-about" class="page">
     <section class="about-grid">
       <div class="about-photo">
-        <div class="about-photo-label">Portrait hier</div>
+        <img src="img/Ich_Foto.jpg" alt="Hans Hendrik" />
+        <p class="about-photo-credit">© 2025 Theresa Gessert</p>
       </div>
       <div class="about-text">
         <h2>Über<br><em>mich.</em></h2>
@@ -592,31 +549,22 @@
         22307 Hamburg
       </address>
     </div>
-
     <hr class="impressum-divider" />
-
     <div class="impressum-block">
       <h3>Inhaltlich verantwortlich</h3>
       <p>Hans Hendrik Wenzel (Anschrift wie oben)</p>
     </div>
-
     <hr class="impressum-divider" />
-
     <div class="impressum-block">
       <h3>Haftung für Inhalte</h3>
-      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
-      <p>Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.</p>
+      <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.</p>
     </div>
-
     <hr class="impressum-divider" />
-
     <div class="impressum-block">
       <h3>Haftung für Links</h3>
-      <p>Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
+      <p>Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.</p>
     </div>
-
     <hr class="impressum-divider" />
-
     <div class="impressum-block">
       <h3>Urheberrecht</h3>
       <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.</p>
